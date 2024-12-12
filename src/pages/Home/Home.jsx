@@ -45,17 +45,17 @@ function Home() {
   }
 
   async function editarAgendamento(id, atual) {
-    const nome = window.prompt("Digite um novo nome:", atual.nome);
+    const nome = window.prompt("Editar o nome do paciente:", atual.nome);
     const descricao = window.prompt(
-      "Digite uma nova descricao:",
+      "Editar a descrição do procedimento:",
       atual.descricao
     );
-    const medico = window.prompt("Digite um novo médico:", atual.medico);
+    const medico = window.prompt("Editar o nome do médico:", atual.medico);
     const dataAgendamento = window.prompt(
-      "Digite uma nova data:",
+      "Editar a data:",
       atual.dataAgendamento
     );
-    const horario = window.prompt("Digite um novo horario:", atual.horario);
+    const horario = window.prompt("Editar o horário:", atual.horario);
 
     if (nome) {
       await fetch(`http://localhost:3000/agendamentos/${id}`, {

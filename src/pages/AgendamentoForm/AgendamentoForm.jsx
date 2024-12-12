@@ -20,7 +20,7 @@ function AgendamentoForm() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dados),
     });
-    window.alert("O agendamento foi Criado!"), loadData();
+    window.alert("O agendamento foi criado!"), loadData();
     reset();
   }
 
