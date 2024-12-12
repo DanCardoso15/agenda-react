@@ -1,14 +1,35 @@
 import { useEffect, useState } from "react";
-import { Button, ButtonGroup, Container } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import Header from "../../components/Header/Header";
 
 function Home() {
-  const [agendamentos, setagendamentos] = useState([]);
+  const [agendamentos, setAgendamentos] = useState([]);
+  const [buscaNome, setBuscaNome] = useState("");
+  const [buscaDescricao, setBuscaDescricao] = useState("");
+  const [buscaData, setBuscaData] = useState("");
+  const [buscaHorario, setBuscaHorario] = useState("");
+
+  const filtroAgendamento = agendamentos.filter((agendamento) => {
+    return (
+      (!buscaNome ||
+        agendamento.nome?.toLowerCase().includes(buscaNome.toLowerCase())) &&
+      (!buscaDescricao ||
+        agendamento.descricao
+          ?.toLowerCase()
+          .includes(buscaDescricao.toLowerCase())) &&
+      (!buscaData ||
+        agendamento.dataAgendamento
+          ?.toLowerCase()
+          .includes(buscaData.toLowerCase())) &&
+      (!buscaHorario ||
+        agendamento.horario?.toLowerCase().includes(buscaHorario.toLowerCase()))
+    );
+  });
 
   async function loadData() {
     const resposta = await fetch("http://localhost:3000/agendamentos");
     const dados = await resposta.json();
-    setagendamentos(dados);
+    setAgendamentos(dados);
   }
 
   async function excluirAgendamento(id) {
@@ -72,7 +93,52 @@ function Home() {
       <Container>
         <div className="border p-4 rounded shadow">
           <h1 className="mb-3 text-center">Lista de Agendamentos</h1>
-          <table className="table table-striped table-bordered">
+
+          <Row>
+            <Form as={Row}>
+              <Form.Group as={Col} className="mb-2">
+                <Form.Label>Buscar por Paciente:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Digite o nome"
+                  value={buscaNome}
+                  onChange={(ev) => setBuscaNome(ev.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group as={Col} className="mb-2">
+                <Form.Label>Buscar por Procedimento:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Digite o procedimento"
+                  value={buscaDescricao}
+                  onChange={(ev) => setBuscaDescricao(ev.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group as={Col} className="mb-2">
+                <Form.Label>Buscar por Data:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="AAAA-MM-DD"
+                  value={buscaData}
+                  onChange={(ev) => setBuscaData(ev.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group as={Col} className="mb-2">
+                <Form.Label>Buscar por Horário:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Digite o horário"
+                  value={buscaHorario}
+                  onChange={(ev) => setBuscaHorario(ev.target.value)}
+                />
+              </Form.Group>
+            </Form>
+          </Row>
+
+          <table className="table table-striped table-bordered mt-2 mx-auto">
             <thead>
               <tr className="text-center">
                 <th>Paciente</th>
@@ -83,7 +149,7 @@ function Home() {
               </tr>
             </thead>
             <tbody>
-              {agendamentos.map((agendamento) => (
+              {filtroAgendamento.map((agendamento) => (
                 <tr key={agendamento.id}>
                   <td>{agendamento.nome}</td>
                   <td>{agendamento.descricao}</td>

@@ -62,7 +62,7 @@ function AgendamentoForm() {
                   {...register("dataAgendamento")}
                 />
                 <Form.Text id="passwordHelpBlock" muted>
-                  Formato: Ano-Mês-Dia
+                  Formato: AAAA-MM-DD
                 </Form.Text>
               </Form.Group>
 
