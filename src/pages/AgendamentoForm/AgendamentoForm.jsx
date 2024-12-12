@@ -20,7 +20,7 @@ function AgendamentoForm() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dados),
     });
-    loadData();
+    window.alert("O agendamento foi Criado!"), loadData();
     reset();
   }
 
@@ -39,6 +39,11 @@ function AgendamentoForm() {
             <Form.Group className="mb-3">
               <Form.Label htmlFor="nome">Nome do Paciente:</Form.Label>
               <Form.Control type="text" id="nome" {...register("nome")} />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label htmlFor="medico">Médico Responsável:</Form.Label>
+              <Form.Control type="text" id="medico" {...register("medico")} />
             </Form.Group>
 
             <Form.Group className="mb-3">

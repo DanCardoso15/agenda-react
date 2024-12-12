@@ -6,6 +6,7 @@ function Home() {
   const [agendamentos, setAgendamentos] = useState([]);
   const [buscaNome, setBuscaNome] = useState("");
   const [buscaDescricao, setBuscaDescricao] = useState("");
+  const [buscaMedico, setBuscaMedico] = useState("");
   const [buscaData, setBuscaData] = useState("");
   const [buscaHorario, setBuscaHorario] = useState("");
 
@@ -17,6 +18,10 @@ function Home() {
         agendamento.descricao
           ?.toLowerCase()
           .includes(buscaDescricao.toLowerCase())) &&
+      (!buscaMedico ||
+        agendamento.medico
+          ?.toLowerCase()
+          .includes(buscaMedico.toLowerCase())) &&
       (!buscaData ||
         agendamento.dataAgendamento
           ?.toLowerCase()
@@ -45,6 +50,7 @@ function Home() {
       "Digite uma nova descricao:",
       atual.descricao
     );
+    const medico = window.prompt("Digite um novo médico:", atual.medico);
     const dataAgendamento = window.prompt(
       "Digite uma nova data:",
       atual.dataAgendamento
@@ -63,6 +69,13 @@ function Home() {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ descricao }),
+      });
+    }
+    if (medico) {
+      await fetch(`http://localhost:3000/agendamentos/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ medico }),
       });
     }
     if (dataAgendamento) {
@@ -90,7 +103,7 @@ function Home() {
   return (
     <div>
       <Header />
-      <Container>
+      <Container  className="d-flex justify-content-center mt-4">
         <div className="border p-4 rounded shadow">
           <h1 className="mb-3 text-center">Lista de Agendamentos</h1>
 
@@ -113,6 +126,16 @@ function Home() {
                   placeholder="Digite o procedimento"
                   value={buscaDescricao}
                   onChange={(ev) => setBuscaDescricao(ev.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group as={Col} className="mb-2">
+                <Form.Label>Buscar por Médico:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Digite o médico"
+                  value={buscaMedico}
+                  onChange={(ev) => setBuscaMedico(ev.target.value)}
                 />
               </Form.Group>
 
@@ -143,6 +166,7 @@ function Home() {
               <tr className="text-center">
                 <th>Paciente</th>
                 <th>Procedimento</th>
+                <th>Médico</th>
                 <th>Data</th>
                 <th>Horário</th>
                 <th>Ações</th>
@@ -153,13 +177,14 @@ function Home() {
                 <tr key={agendamento.id}>
                   <td>{agendamento.nome}</td>
                   <td>{agendamento.descricao}</td>
+                  <td>{agendamento.medico}</td>
                   <td className="text-center">{agendamento.dataAgendamento}</td>
                   <td className="text-center">{agendamento.horario}</td>
                   <td style={{ textAlign: "center" }}>
                     <Button
                       variant="primary"
                       size="sm"
-                      style={{ width: "7.5rem" }}
+                      style={{ width: "3.5rem" }}
                       onClick={() =>
                         editarAgendamento(agendamento.id, agendamento)
                       }
@@ -169,7 +194,7 @@ function Home() {
                     <Button
                       variant="primary"
                       size="sm"
-                      style={{ width: "7.5rem" }}
+                      style={{ width: "3.5rem" }}
                       onClick={() => excluirAgendamento(agendamento.id)}
                     >
                       Excluir
