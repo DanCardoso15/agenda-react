@@ -52,7 +52,7 @@ function Home() {
     );
     const medico = window.prompt("Editar o nome do médico:", atual.medico);
     const dataAgendamento = window.prompt(
-      "Editar a data:",
+      "Editar a data: (Formato: AAAA-MM-DD)",
       atual.dataAgendamento
     );
     const horario = window.prompt("Editar o horário:", atual.horario);
@@ -103,13 +103,13 @@ function Home() {
   return (
     <div>
       <Header />
-      <Container  className="d-flex justify-content-center mt-4">
+      <Container className="d-flex justify-content-center mt-4">
         <div className="border p-4 rounded shadow">
           <h1 className="mb-3 text-center">Lista de Agendamentos</h1>
 
-          <Row>
-            <Form as={Row}>
-              <Form.Group as={Col} className="mb-2">
+          <Row className="d-flex flex-wrap align-items-center">
+            <Form as={Row} className="w-100">
+              <Form.Group as={Col} xs={12} md={4} className="mb-2">
                 <Form.Label>Buscar por Paciente:</Form.Label>
                 <Form.Control
                   type="text"
@@ -119,7 +119,7 @@ function Home() {
                 />
               </Form.Group>
 
-              <Form.Group as={Col} className="mb-2">
+              <Form.Group as={Col} xs={12} md={4} className="mb-2">
                 <Form.Label>Buscar por Procedimento:</Form.Label>
                 <Form.Control
                   type="text"
@@ -129,7 +129,7 @@ function Home() {
                 />
               </Form.Group>
 
-              <Form.Group as={Col} className="mb-2">
+              <Form.Group as={Col} xs={12} md={4} className="mb-2">
                 <Form.Label>Buscar por Médico:</Form.Label>
                 <Form.Control
                   type="text"
@@ -139,21 +139,19 @@ function Home() {
                 />
               </Form.Group>
 
-              <Form.Group as={Col} className="mb-2">
+              <Form.Group as={Col} xs={12} md={4} className="mb-2">
                 <Form.Label>Buscar por Data:</Form.Label>
                 <Form.Control
-                  type="text"
-                  placeholder="AAAA-MM-DD"
+                  type="date"
                   value={buscaData}
                   onChange={(ev) => setBuscaData(ev.target.value)}
                 />
               </Form.Group>
 
-              <Form.Group as={Col} className="mb-2">
+              <Form.Group as={Col} xs={12} md={4} className="mb-2">
                 <Form.Label>Buscar por Horário:</Form.Label>
                 <Form.Control
-                  type="text"
-                  placeholder="Digite o horário"
+                  type="time"
                   value={buscaHorario}
                   onChange={(ev) => setBuscaHorario(ev.target.value)}
                 />

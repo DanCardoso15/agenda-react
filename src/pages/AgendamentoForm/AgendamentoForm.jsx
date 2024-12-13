@@ -62,13 +62,10 @@ function AgendamentoForm() {
                   Data de Agendamento:
                 </Form.Label>
                 <Form.Control
-                  type="text"
+                  type="date"
                   id="dataAgendamento"
                   {...register("dataAgendamento")}
                 />
-                <Form.Text id="passwordHelpBlock" muted>
-                  Formato: AAAA-MM-DD
-                </Form.Text>
               </Form.Group>
 
               <Form.Group as={Col}>
